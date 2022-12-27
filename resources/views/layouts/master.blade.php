@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
-        <div class="wrapper">
+        <div class="wrapper" id="app">
             <!-- Navbar -->
             <nav
                 class="main-header navbar navbar-expand navbar-white navbar-light"
