@@ -22,6 +22,7 @@
                     <p class="login-box-msg">Sign in to start your session</p>
                     <form action="{{ route('login') }}" method="post">
                         @csrf
+                        <label for="email">Email</label>
                         <div class="input-group mb-3">
                             <input
                                 id="email"
@@ -29,6 +30,7 @@
                                 class="form-control {{ $errors->first('email') ? 'is-invalid' : '' }}"
                                 name="email"
                                 placeholder="Email"
+                                {{-- value="{{ old('email') }}" --}}
                                 value="kimheang135@gmail.com"
                             />
                             <div class="input-group-append">
@@ -42,6 +44,7 @@
                                 </span>
                             @endif
                         </div>
+                        <label for="password">Password</label>
                         <div class="input-group mb-3">
                             <input
                                 id="password"
@@ -65,7 +68,7 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="icheck-primary">
-                                    <input type="checkbox" id="remember" />
+                                    <input type="checkbox" id="remember" name="remember" />
                                     <label for="remember">
                                         Remember Me
                                     </label>
