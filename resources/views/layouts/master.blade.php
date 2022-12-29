@@ -34,12 +34,12 @@
                             <i class="fas fa-bars"></i>
                         </a>
                     </li>
-                    <li class="nav-item d-none d-sm-inline-block">
+                    {{-- <li class="nav-item d-none d-sm-inline-block">
                         <a href="index3.html" class="nav-link">Home</a>
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
                         <a href="#" class="nav-link">Contact</a>
-                    </li>
+                    </li> --}}
                 </ul>
 
                 <!-- Right navbar links -->
@@ -286,7 +286,9 @@
                                                  document.getElementById('logout-form').submit();"
                                 >
                                     <i class="nav-icon fas fa-lock"></i>
-                                    {{ __('Logout') }}
+                                    <p>
+                                        {{ __('Logout') }}
+                                    </p>
                                 </a>
                                 <form
                                     id="logout-form"
