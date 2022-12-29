@@ -2,7 +2,7 @@
 
 namespace App\Services\Customers;
 
-class CreateCustomerService
+class UpdateCustomerService
 {
     //
 }
