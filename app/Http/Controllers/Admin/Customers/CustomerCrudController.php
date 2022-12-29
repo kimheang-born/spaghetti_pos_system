@@ -14,7 +14,7 @@ class CustomerCrudController extends Controller
      */
     public function index()
     {
-        //
+        return view('layouts.customers.customer');
     }
 
     /**
