@@ -245,15 +245,15 @@
                             data-accordion="false"
                         >
                             <li class="nav-item">
-                                <a href="#" class="nav-link @yield('home')">
+                                <a href="{{ route('home') }}" class="nav-link @yield('home')">
                                     <i class="nav-icon fas fa-home"></i>
                                     <p>
-                                        Home
+                                        ទំព័រដើម
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('customer.index') }}" class="nav-link @yield('customer')">
                                     <i class="nav-icon fas fa-user"></i>
                                     <p>
                                         ព័ត៌មានអតិថិជន
