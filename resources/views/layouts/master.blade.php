@@ -215,7 +215,7 @@
                             />
                         </div>
                         <div class="info text-capitalize">
-                            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                            <a href="#" class="d-block">{{ optional(Auth::user())->name }}</a>
                         </div>
                     </div>
 
