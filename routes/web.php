@@ -20,4 +20,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/customer', 'Admin\Customers\CustomerCrudController');
+Route::group([
+    'middleware' => [
+        'auth',
+    ],
+    'namespace'  => 'Admin',
+], function () {
+    Route::resource('/customer', 'Customers\CustomerCrudController');
+});
