@@ -98,19 +98,37 @@
     <div class="modal fade" id="modal-cutomer">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Default Modal</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>One fine body…</p>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                <form role="form" method="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title">ព័ត៌មានអតិថិជន</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name">ឈ្មោះអថិជន</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="name"
+                                id="name"
+                                placeholder="ឈ្មោះអថិជន"
+                            >
+                            <div class="form-group">
+                                <label for="gender">ភេទ</label>
+                                <select name="gender" class="form-control" id="gender">
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">បោះបង់</button>
+                        <button type="button" class="btn btn-primary">រក្សាទុក<i class="fas fa-save ml-1"></i></button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
