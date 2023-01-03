@@ -98,7 +98,12 @@
     <div class="modal fade" id="modal-cutomer">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form @submit.prevent="createCustomer" role="form" method="post">
+                <form
+                    @submit.prevent="createCustomer"
+                    @keydown="form.onKeydown($event)"
+                    role="form"
+                    method="post"
+                >
                     <div class="modal-header">
                         <h4 class="modal-title">ព័ត៌មានអតិថិជន</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -110,17 +115,20 @@
                             <label for="name">ឈ្មោះអថិជន</label>
                             <input
                                 v-model="form.name"
+                                :class="form.errors.has('name') ? 'is-invalid' : ''"
                                 type="text"
                                 class="form-control"
                                 name="name"
                                 id="name"
                                 placeholder="ឈ្មោះអថិជន"
                             >
+                            <span class="error invalid-feedback d-block" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                         </div>
                         <div class="form-group">
                             <label for="gender">ភេទ</label>
                             <select
                                 v-model="form.gender"
+                                :class="form.errors.has('gender') ? 'is-invalid' : ''"
                                 name="gender"
                                 class="form-control"
                                 id="gender"
@@ -128,33 +136,44 @@
                                 <option value="1">Male</option>
                                 <option value="0">Female</option>
                             </select>
+                            <span class="error invalid-feedback d-block" v-if="form.errors.has('gender')" v-html="form.errors.get('gender')" />
                         </div>
                         <div class="form-group">
                             <label for="phone">លេខទូរស័ព្ទ</label>
                             <input
                                 v-model="form.phone"
+                                :class="form.errors.has('phone') ? 'is-invalid' : ''"
                                 type="text"
                                 class="form-control"
                                 name="phone"
                                 id="phone"
                                 placeholder="លេខទូរស័ព្ទ"
                             >
+                            <span class="error invalid-feedback d-block" v-if="form.errors.has('phone')" v-html="form.errors.get('phone')" />
                         </div>
                         <div class="form-group">
                             <label for="address">អាសយដ្ឋាន</label>
                             <textarea
                                 v-model="form.address"
+                                :class="form.errors.has('address') ? 'is-invalid' : ''"
                                 name="address"
                                 class="form-control"
                                 id="address"
                                 rows="3"
                                 placeholder="អាសយដ្ឋាន"
                             ></textarea>
+                            <span class="error invalid-feedback d-block" v-if="form.errors.has('address')" v-html="form.errors.get('address')" />
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">បោះបង់<i class="fas fa-times ml-1"></i></button>
-                        <button type="submit" class="btn btn-primary">រក្សាទុក<i class="fas fa-save ml-1"></i></button>
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            :disabled="form.busy"
+                        >
+                            រក្សាទុក<i class="fas fa-save ml-1"></i>
+                        </button>
                     </div>
                 </form>
             </div>
