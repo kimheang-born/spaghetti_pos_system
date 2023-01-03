@@ -3,6 +3,6 @@
 @section('customer', 'active')
 @section('content')
 
-<customer></customer>
+<customer :token="{ value: '{{ csrf_token() }}' }"></customer>
 
 @endsection

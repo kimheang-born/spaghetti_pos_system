@@ -5,8 +5,10 @@
  */
 
 require('./bootstrap');
+import { Form } from "vform";
 
 window.Vue = require('vue');
+window.Form = Form;
 
 /**
  * The following block of code may be used to automatically register your

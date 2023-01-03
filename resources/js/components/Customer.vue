@@ -98,7 +98,7 @@
     <div class="modal fade" id="modal-cutomer">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form role="form" method="post">
+                <form @submit.prevent="createCustomer" role="form" method="post">
                     <div class="modal-header">
                         <h4 class="modal-title">ព័ត៌មានអតិថិជន</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -109,24 +109,52 @@
                         <div class="form-group">
                             <label for="name">ឈ្មោះអថិជន</label>
                             <input
+                                v-model="form.name"
                                 type="text"
                                 class="form-control"
                                 name="name"
                                 id="name"
                                 placeholder="ឈ្មោះអថិជន"
                             >
-                            <div class="form-group">
-                                <label for="gender">ភេទ</label>
-                                <select name="gender" class="form-control" id="gender">
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                </select>
-                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">ភេទ</label>
+                            <select
+                                v-model="form.gender"
+                                name="gender"
+                                class="form-control"
+                                id="gender"
+                            >
+                                <option value="1">Male</option>
+                                <option value="0">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">លេខទូរស័ព្ទ</label>
+                            <input
+                                v-model="form.phone"
+                                type="text"
+                                class="form-control"
+                                name="phone"
+                                id="phone"
+                                placeholder="លេខទូរស័ព្ទ"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="address">អាសយដ្ឋាន</label>
+                            <textarea
+                                v-model="form.address"
+                                name="address"
+                                class="form-control"
+                                id="address"
+                                rows="3"
+                                placeholder="អាសយដ្ឋាន"
+                            ></textarea>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">បោះបង់</button>
-                        <button type="button" class="btn btn-primary">រក្សាទុក<i class="fas fa-save ml-1"></i></button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">បោះបង់<i class="fas fa-times ml-1"></i></button>
+                        <button type="submit" class="btn btn-primary">រក្សាទុក<i class="fas fa-save ml-1"></i></button>
                     </div>
                 </form>
             </div>
@@ -137,10 +165,37 @@
 
 <script>
     export default {
+        props: ['token'],
+        data() {
+            return {
+                form: new Form({
+                    id: "",
+                    name: "",
+                    gender: "1",
+                    address: "",
+                    _token: this.token.value
+                })
+            }
+        },
         methods: {
             newCustomer() {
+                this.form.reset();
                 $('#modal-cutomer').modal('show');
+            },
+            createCustomer() {
+                this.form.post('/customer')
+                    .then((response) => {
+                        $('#modal-cutomer').modal('hide');
+                        console.log(response.data);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             }
         },
     }
 </script>
+
+<style lang="sass" scoped>
+
+</style>
