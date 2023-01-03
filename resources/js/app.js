@@ -5,7 +5,16 @@
  */
 
 require('./bootstrap');
+
 import { Form } from "vform";
+
+import {
+    Button,
+    HasError,
+    AlertError,
+    AlertErrors,
+    AlertSuccess
+} from "vform/src/components/bootstrap4";
 
 window.Vue = require('vue');
 window.Form = Form;
@@ -20,6 +29,12 @@ window.Form = Form;
 
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+
+Vue.component(Button.name, Button);
+Vue.component(HasError.name, HasError);
+Vue.component(AlertError.name, AlertError);
+Vue.component(AlertErrors.name, AlertErrors);
+Vue.component(AlertSuccess.name, AlertSuccess);
 
 Vue.component('customer', require('./components/Customer.vue').default);
 
