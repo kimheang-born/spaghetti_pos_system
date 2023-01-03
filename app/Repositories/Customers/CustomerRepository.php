@@ -38,4 +38,9 @@ class CustomerRepository extends BaseRepository
     {
         return Customer::class;
     }
+
+    public function save($data)
+    {
+        return $this->model->create($data);
+    }
 }

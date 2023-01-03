@@ -43,6 +43,15 @@ class Customer extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function allowOnly(): array
+    {
+        return [
+            "name",
+            "gender",
+            "phone",
+            "address",
+        ];
+    }
 
     /*
     |--------------------------------------------------------------------------

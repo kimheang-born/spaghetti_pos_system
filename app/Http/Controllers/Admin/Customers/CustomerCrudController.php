@@ -2,11 +2,34 @@
 
 namespace App\Http\Controllers\Admin\Customers;
 
+use Throwable;
 use Illuminate\Http\Request;
+use App\Models\Customers\Customer;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Services\Customers\CreateCustomerService;
+use App\Http\Requests\Customers\CreateCustomerRequest;
 
 class CustomerCrudController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | GLOBAL VARIABLES
+    |--------------------------------------------------------------------------
+    */
+    protected $customer;
+    protected $createCustomerService;
+
+    public function __construct(
+        Customer $customer,
+        CreateCustomerService $createCustomerService
+    )
+    {
+        $this->customer = $customer;
+        $this->createCustomerService = $createCustomerService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +56,31 @@ class CustomerCrudController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCustomerRequest $request)
     {
-        //
+
+        $data   = $request->only($this->customer->allowOnly());
+
+        DB::beginTransaction();
+        
+        try {
+
+            $result = $this->createCustomerService->saveCustomerData($data);
+
+            DB::commit();
+
+            return response()->json([
+                "message" => "Customer: $result->name has been successfully created."
+            ], 200);
+            
+        } catch (Throwable $th) {
+            Log::error(self::class. '::store() : ' . $th);
+            DB::rollBack();
+
+            return response()->json([
+                "message" => "Sorry, someting went wrong."
+            ], 500);
+        }
     }
 
     /**
