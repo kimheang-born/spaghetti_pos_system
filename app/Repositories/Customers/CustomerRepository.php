@@ -43,4 +43,9 @@ class CustomerRepository extends BaseRepository
     {
         return $this->model->create($data);
     }
+
+    public function getAllCustomers()
+    {
+        return $this->model->paginate(10);
+    }
 }

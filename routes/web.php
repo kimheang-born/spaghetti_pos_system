@@ -27,4 +27,5 @@ Route::group([
     'namespace'  => 'Admin',
 ], function () {
     Route::resource('/customer', 'Customers\CustomerCrudController');
+    Route::get('/customers', 'Customers\CustomerCrudController@getData')->name('customer.list');
 });

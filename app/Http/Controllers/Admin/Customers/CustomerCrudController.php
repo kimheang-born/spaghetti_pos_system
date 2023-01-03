@@ -8,6 +8,7 @@ use App\Models\Customers\Customer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Services\Customers\GetCustomerService;
 use App\Services\Customers\CreateCustomerService;
 use App\Http\Requests\Customers\CreateCustomerRequest;
 
@@ -20,13 +21,16 @@ class CustomerCrudController extends Controller
     */
     protected $customer;
     protected $createCustomerService;
+    protected $getCustomerService;
 
     public function __construct(
         Customer $customer,
+        GetCustomerService $getCustomerService,
         CreateCustomerService $createCustomerService
     )
     {
         $this->customer = $customer;
+        $this->getCustomerService = $getCustomerService;
         $this->createCustomerService = $createCustomerService;
     }
 
@@ -38,6 +42,18 @@ class CustomerCrudController extends Controller
     public function index()
     {
         return view('layouts.customers.customer');
+    }
+
+    public function getData()
+    {
+        try {
+            return $this->getCustomerService->getAll();
+        } catch (Throwable $th) {
+            Log::error(self::class. '::getData() : ' . $th);
+            return response()->json([
+                "message" => "Sorry, someting went wrong."
+            ], 500);
+        }
     }
 
     /**
