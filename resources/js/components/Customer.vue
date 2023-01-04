@@ -216,13 +216,6 @@
                         }
                     })
                     .catch((error) => {
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Something went wrong!',
-                            showConfirmButton: false,
-                        })
                         console.log(error);
                     });
             }
