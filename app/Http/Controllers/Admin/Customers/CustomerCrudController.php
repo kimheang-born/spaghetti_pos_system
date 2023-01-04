@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Customers\GetCustomerService;
 use App\Services\Customers\CreateCustomerService;
 use App\Http\Requests\Customers\CreateCustomerRequest;
+use App\Http\Resources\API\Customers\CustomerResource;
 
 class CustomerCrudController extends Controller
 {
@@ -47,7 +48,10 @@ class CustomerCrudController extends Controller
     public function getData()
     {
         try {
-            return $this->getCustomerService->getAll();
+            
+            $data = $this->getCustomerService->getAll();
+            return CustomerResource::collection($data);
+
         } catch (Throwable $th) {
             Log::error(self::class. '::getData() : ' . $th);
             return response()->json([
