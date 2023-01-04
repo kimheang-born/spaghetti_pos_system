@@ -205,9 +205,24 @@
                 this.form.post('/customer')
                     .then((response) => {
                         $('#modal-cutomer').modal('hide');
-                        console.log(response.data);
+                        if (response.data.success) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Record has been successfully created.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
                     })
                     .catch((error) => {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                            showConfirmButton: false,
+                        })
                         console.log(error);
                     });
             }
@@ -215,6 +230,8 @@
     }
 </script>
 
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
+.swal-wide{
+    width:850px !important;
+}
 </style>

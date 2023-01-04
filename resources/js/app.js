@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 
+import Swal from "sweetalert2";
 import { Form } from "vform";
 
 import {
@@ -18,6 +19,7 @@ import {
 
 window.Vue = require('vue');
 window.Form = Form;
+window.Swal = Swal;
 
 /**
  * The following block of code may be used to automatically register your
