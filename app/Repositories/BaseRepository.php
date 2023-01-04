@@ -56,7 +56,9 @@ abstract class BaseRepository
         $model = $this->app->make($this->model());
 
         if (!$model instanceof Model) {
-            throw new Exception("Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model");
+            throw new \UnexpectedValueException(
+                "Class {$this->model()} must be an instance of ".Model::class
+            );
         }
 
         return $this->model = $model;
