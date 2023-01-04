@@ -8,6 +8,7 @@ require('./bootstrap');
 
 import Swal from "sweetalert2";
 import { Form } from "vform";
+import Toasted from 'vue-toasted';
 
 import {
     Button,
@@ -37,6 +38,7 @@ Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
 Vue.component(AlertErrors.name, AlertErrors);
 Vue.component(AlertSuccess.name, AlertSuccess);
+Vue.use(Toasted);
 
 Vue.component('customer', require('./components/Customer.vue').default);
 

@@ -206,13 +206,12 @@
                     .then((response) => {
                         $('#modal-cutomer').modal('hide');
                         if (response.data.success) {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Record has been successfully created.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            this.$toasted.success(response.data.message, { 
+                                theme: "toasted-primary", 
+                                position: "top-right", 
+                                keepOnHover: true,
+                                duration : 3000,
+                            });
                         }
                     })
                     .catch((error) => {
