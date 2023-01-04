@@ -147,7 +147,6 @@ abstract class BaseRepository
      * @param int $id
      * @param array $columns
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null
      */
     public function find($id, $columns = ['*'])
     {
@@ -162,7 +161,6 @@ abstract class BaseRepository
      * @param array $input
      * @param int $id
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model
      */
     public function update($input, $id)
     {
