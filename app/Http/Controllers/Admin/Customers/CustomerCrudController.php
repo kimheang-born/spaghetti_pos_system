@@ -86,6 +86,7 @@ class CustomerCrudController extends Controller
             DB::commit();
 
             return response()->json([
+                "success" => true,
                 "message" => "Customer: $result->name has been successfully created."
             ], 200);
             
@@ -94,6 +95,7 @@ class CustomerCrudController extends Controller
             DB::rollBack();
 
             return response()->json([
+                "success" => false,
                 "message" => "Sorry, someting went wrong."
             ], 500);
         }
