@@ -58,33 +58,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>183</td>
-                                            <td>John Doe</td>
-                                            <td>11-7-2014</td>
-                                            <td><span class="tag tag-success">Approved</span></td>
-                                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>219</td>
-                                            <td>Alexander Pierce</td>
-                                            <td>11-7-2014</td>
-                                            <td><span class="tag tag-warning">Pending</span></td>
-                                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>657</td>
-                                            <td>Bob Doe</td>
-                                            <td>11-7-2014</td>
-                                            <td><span class="tag tag-primary">Approved</span></td>
-                                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>175</td>
-                                            <td>Mike Doe</td>
-                                            <td>11-7-2014</td>
-                                            <td><span class="tag tag-danger">Denied</span></td>
-                                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                                        <tr
+                                            v-for="customer in customers"
+                                            :key="customer.id"
+                                        >
+                                            <td>{{ customer.id }}</td>
+                                            <td>{{ customer.name }}</td>
+                                            <td>{{ customer.gender }}</td>
+                                            <td>{{ customer.phone }}</td>
+                                            <td>{{ customer.address }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -110,7 +92,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" v-if="loading">Loading...</div>
+                    <div class="modal-body" v-else>
                         <div class="form-group">
                             <label for="name">ឈ្មោះអថិជន</label>
                             <input
@@ -193,8 +176,13 @@
                     gender: "1",
                     address: "",
                     _token: this.token.value
-                })
+                }),
+                customers: [],
+                loading: true,
             }
+        },
+        mounted() {
+            this.getCustomers();
         },
         methods: {
             newCustomer() {
@@ -202,7 +190,7 @@
                 $('#modal-cutomer').modal('show');
             },
             createCustomer() {
-                this.form.post('/customer')
+                this.form.post('customer')
                     .then((response) => {
                         $('#modal-cutomer').modal('hide');
                         if (response.data.success) {
@@ -217,13 +205,23 @@
                     .catch((error) => {
                         console.log(error);
                     });
+            },
+            async getCustomers(page = 1) {
+                await axios.get('customers', {
+                                params: {
+                                    page: page
+                                }
+                            })
+                            .then((response) => {
+                                this.customers = response.data.data;
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            })
+                            .finally(() => this.loading = false);
             }
         },
     }
 </script>
 
-<style lang="scss" scoped>
-.swal-wide{
-    width:850px !important;
-}
-</style>
+<style lang="scss" scoped></style>
