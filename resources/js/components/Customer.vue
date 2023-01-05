@@ -64,12 +64,18 @@
                                         >
                                             <td>{{ customer.id }}</td>
                                             <td>{{ customer.name }}</td>
-                                            <td>{{ customer.gender }}</td>
+                                            <td v-if="customer.gender">Male</td>
+                                            <td v-else>Female</td>
                                             <td>{{ customer.phone }}</td>
                                             <td>{{ customer.address }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div class="card-footer">
+                                    <div class="pagination-content float-right">
+                                        <pagination v-model="page" :records="200" @paginate="getCustomers"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -177,12 +183,22 @@
                     address: "",
                     _token: this.token.value
                 }),
-                customers: [],
+                customers: {},
+                page: 1,
                 loading: true,
             }
         },
         mounted() {
             this.getCustomers();
+
+            Fire.$on('onCreated', (page = 1) => {
+                this.getCustomers(page);
+            });
+        },
+        computed: {
+            numberOfRecords() {
+                return this.customers.length;
+            },
         },
         methods: {
             newCustomer() {
@@ -192,7 +208,11 @@
             createCustomer() {
                 this.form.post('customer')
                     .then((response) => {
+
+                        Fire.$emit('onCreated', 1);
+
                         $('#modal-cutomer').modal('hide');
+
                         if (response.data.success) {
                             this.$toasted.success(response.data.message, { 
                                 theme: "toasted-primary", 

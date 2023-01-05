@@ -9,6 +9,7 @@ require('./bootstrap');
 import Swal from "sweetalert2";
 import { Form } from "vform";
 import Toasted from 'vue-toasted';
+import Pagination from 'vue-pagination-2';
 
 import {
     Button,
@@ -21,6 +22,8 @@ import {
 window.Vue = require('vue');
 window.Form = Form;
 window.Swal = Swal;
+
+window.Fire = new Vue();
 
 /**
  * The following block of code may be used to automatically register your
@@ -40,6 +43,7 @@ Vue.component(AlertErrors.name, AlertErrors);
 Vue.component(AlertSuccess.name, AlertSuccess);
 Vue.use(Toasted);
 
+Vue.component('pagination', Pagination);
 Vue.component('customer', require('./components/Customer.vue').default);
 
 /**
