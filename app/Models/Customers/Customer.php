@@ -58,6 +58,10 @@ class Customer extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+    public function scopeLatestCustomers($query)
+    {
+        return $query->latest();
+    }
 
     /*
     |--------------------------------------------------------------------------
