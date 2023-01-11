@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Admin\Customers;
 
 use Throwable;
-use Illuminate\Http\Request;
 use App\Models\Customers\Customer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Services\Customers\GetCustomerService;
 use App\Services\Customers\CreateCustomerService;
+use App\Services\Customers\UpdateCustomerService;
 use App\Http\Requests\Customers\CreateCustomerRequest;
+use App\Http\Requests\Customers\UpdateCustomerRequest;
 use App\Http\Resources\API\Customers\CustomerResource;
 
 class CustomerCrudController extends Controller
@@ -21,19 +22,24 @@ class CustomerCrudController extends Controller
     |--------------------------------------------------------------------------
     */
     protected $customer;
-    protected $createCustomerService;
     protected $getCustomerService;
+    protected $createCustomerService;
+    protected $updateCustomerService;
 
     public function __construct(
         Customer $customer,
         GetCustomerService $getCustomerService,
-        CreateCustomerService $createCustomerService
+        CreateCustomerService $createCustomerService,
+        UpdateCustomerService $updateCustomerService
     )
     {
         $this->customer = $customer;
         $this->getCustomerService = $getCustomerService;
         $this->createCustomerService = $createCustomerService;
+        $this->updateCustomerService = $updateCustomerService;
     }
+
+    const MSG_SOMETHING_WENT_WRONG = "Sorry, something went wrong";
 
     /**
      * Display a listing of the resource.
@@ -55,7 +61,7 @@ class CustomerCrudController extends Controller
         } catch (Throwable $th) {
             Log::error(self::class. '::getData() : ' . $th);
             return response()->json([
-                "message" => "Sorry, someting went wrong."
+                "message" => self::MSG_SOMETHING_WENT_WRONG,
             ], 500);
         }
     }
@@ -100,7 +106,7 @@ class CustomerCrudController extends Controller
 
             return response()->json([
                 "success" => false,
-                "message" => "Sorry, someting went wrong."
+                "message" => self::MSG_SOMETHING_WENT_WRONG,
             ], 500);
         }
     }
@@ -134,9 +140,32 @@ class CustomerCrudController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCustomerRequest $request, $id)
     {
-        //
+        $data   = $request->only($this->customer->allowOnly());
+
+        DB::beginTransaction();
+
+        try {
+
+            $result = $this->updateCustomerService->updateCustomer($data, $id);
+
+            DB::commit();
+
+            return response()->json([
+                "success" => true,
+                "message" => "Customer: $result->name has been successfully created."
+            ], 200);
+
+        } catch (Throwable $th) {
+            Log::error(self::class. '::update() : ' . $th);
+            DB::rollBack();
+
+            return response()->json([
+                "success" => false,
+                "message" => self::MSG_SOMETHING_WENT_WRONG,
+            ], 500);
+        }
     }
 
     /**

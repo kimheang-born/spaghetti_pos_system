@@ -99,7 +99,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form
-                    @submit.prevent="createCustomer"
+                    @submit.prevent="method ? editCustomer() : createCustomer()"
                     @keydown="form.onKeydown($event)"
                     role="form"
                     method="post"
@@ -188,6 +188,7 @@
         props: ['token'],
         data() {
             return {
+                method: false,
                 form: new Form({
                     id: "",
                     name: "",
@@ -215,12 +216,16 @@
         },
         methods: {
             newCustomer() {
+                this.method = false;
                 this.form.reset();
                 $('#modal-cutomer').modal('show');
             },
             infoCustomer(customer) {
+                this.method = true;
                 this.form.reset();
                 this.form.fill(customer);
+                this.form._token = this.token.value;
+
                 $('#modal-cutomer').modal('show');
             },
             createCustomer() {
@@ -243,6 +248,28 @@
                     .catch((error) => {
                         console.log(error);
                     });
+            },
+            editCustomer() {
+                this.form.put(`customer/${this.form.id}`)
+                            .then((response) => {
+
+                                Fire.$emit('onCreated', this.customers.current_page);
+
+                                $('#modal-cutomer').modal('hide');
+
+                                if (response.data.success) {
+                                    this.$toasted.success(response.data.message, { 
+                                        theme: "toasted-primary", 
+                                        position: "top-right", 
+                                        keepOnHover: true,
+                                        duration : 3000,
+                                    });
+                                }
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+                console.log(111);
             },
             async getCustomers(page = 1) {
                 await axios.get('customers', {
