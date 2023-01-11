@@ -190,7 +190,7 @@
 
             <!-- Main Sidebar Container -->
             <aside
-                class="main-sidebar sidebar-dark-primary elevation-4"
+                class="main-sidebar sidebar-light-primary elevation-4"
                 aria-label="main-sidebar"
             >
                 <!-- Brand Logo -->
