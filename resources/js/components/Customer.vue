@@ -55,19 +55,31 @@
                                             <th>ភេទ</th>
                                             <th>លេខទូរស័ព្ទ</th>
                                             <th>អាសយដ្ឋាន</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody v-if="customers.length > 0">
                                         <tr
                                             v-for="customer in customers"
                                             :key="customer.id"
                                         >
                                             <td>{{ customer.id }}</td>
                                             <td>{{ customer.name }}</td>
-                                            <td v-if="customer.gender">Male</td>
-                                            <td v-else>Female</td>
+                                            <td v-if="customer.gender">ប្រុស</td>
+                                            <td v-else>ស្រី</td>
                                             <td>{{ customer.phone }}</td>
                                             <td>{{ customer.address }}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" @click="infoCustomer(customer)" class="btn btn-outline-primary btn-sm">កែប្រែ</button>
+                                                    <button type="button" class="btn btn-outline-danger btn-sm">លុប</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody v-else>
+                                        <tr>
+                                            <td colspan="6">No data</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -122,8 +134,8 @@
                                 class="form-control"
                                 id="gender"
                             >
-                                <option value="1">Male</option>
-                                <option value="0">Female</option>
+                                <option value="1">ប្រុស</option>
+                                <option value="0">ស្រី</option>
                             </select>
                             <span class="error invalid-feedback d-block" v-if="form.errors.has('gender')" v-html="form.errors.get('gender')" />
                         </div>
@@ -180,6 +192,7 @@
                     id: "",
                     name: "",
                     gender: "1",
+                    phone: "",
                     address: "",
                     _token: this.token.value
                 }),
@@ -203,6 +216,11 @@
         methods: {
             newCustomer() {
                 this.form.reset();
+                $('#modal-cutomer').modal('show');
+            },
+            infoCustomer(customer) {
+                this.form.reset();
+                this.form.fill(customer);
                 $('#modal-cutomer').modal('show');
             },
             createCustomer() {
